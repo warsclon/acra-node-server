@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+ <html> 
+  <head>
+    <title>Logs ACRA Node Server</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="/css/blue/style.css" rel="stylesheet" media="screen">
+	<script type="text/javascript" src="/js/jquery-1.9.js"></script> 
+	<script type="text/javascript" src="/js/jquery.metadata.js"></script> 
+	<script type="text/javascript" src="/js/tablesorter-mini.js"></script> 
+  </head>
+  <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+    </style>
+	<script>
+	$(document).ready(function() 
+    { 
+        $("#tabletLogs").tablesorter(); 
+    } 
+); 
+   
+	</script>
+<body> 
+  
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="#">Logs</a>
+    <ul class="nav">
+	  <li><a href="/mobiles">Select App</a></li>	
+	  <li><a href="/logsexport/<%= appid %>">Export all logs(json format)</a></li>
+	  <li ><a href="/logout">Logout</a></li>
+  </div>
+</div>
+
+  
+<p>
+  
+  
+  
+<table id="tabletLogs" class="tablesorter" border="0" cellpadding="0" cellspacing="1"> 
+<thead> 
+<tr> 
+    <th>Date</th> 
+    <th>Phone model</th> 
+    <th>App Version Name</th> 
+    <th>App Version</th> 
+    <th>Android Version</th> 
+    <th>Detail</th> 
+</tr> 
+</thead> 
+<tbody> 
+<% if (list.length) { %>
+  <% list.forEach(function(element){ %>
+	<tr> 
+		<th><%= element.USER_APP_START_DATE %></th> 
+		<th><%= element.PHONE_MODEL %></th> 
+		<th><%= element.APP_VERSION_NAME %></th> 
+		<th><%= element.APP_VERSION_CODE %></th> 
+		<th><%= element.ANDROID_VERSION %></th> 
+		<th>
+			<a class="btn btn-mini btn-block" href="/logs/<%= appid %>/<%= element._id %>">
+				Detail
+			</a>
+		</th> 
+	</tr> 
+  
+   
+	  
+  <% }) %>
+  </ul>
+<% } %>
+</tbody> 
+</table>
+
+
+  
+</body> 
+</html> 
+
+
