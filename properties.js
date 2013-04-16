@@ -73,6 +73,10 @@ console.log("from:"+from.red);
 
 exports.to = to = par[TO];
 console.log("to:"+to.red);
+
+exports.date_format = date_format = par[DATE_FORMAT];
+console.log("date_format:"+date_format.red);
+
 console.log("------------------------".red);
 
 

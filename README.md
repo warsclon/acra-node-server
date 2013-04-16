@@ -61,7 +61,7 @@ Features
 
 import org.acra.*;
 import org.acra.annotation.*;
-@ReportsCrashes(formUri = "http://SERVER:PORT_SERVER/logs/NAME_APP", formKey=""
+@ReportsCrashes(formUri = "http://SERVER:PORT_SERVER/logs/NAME_APP", formKey="")
 public class MyApplication extends Application {
   @Override
   public void onCreate() {

@@ -7,8 +7,8 @@ var logger = require('./logger');
 var app = express();
 
 app.configure(function () {
-    app.use(express.logger('default'));     /* 'default', 'short', 'tiny', 'dev' */
-    app.use(express.bodyParser());
+	app.use(express.logger('default'));  /* 'default', 'short', 'tiny', 'dev' */
+  app.use(express.bodyParser());
 });
 
 app.use(express.static(__dirname + '/public'));
@@ -34,7 +34,7 @@ function clientErrorHandler(err, req, res, next) {
 var basicAuth = express.basicAuth(function(username, password) {
   return (username == prop.username && password == prop.password);
 }, 'Restrict area, please identify');
- 
+  
 //Mobile  without auth
 app.post('/logs/:appid', logger.addLog);
 //Administration with auth
@@ -45,7 +45,7 @@ app.get('/logsexport/:appid', basicAuth, logger.findAllExport);
 app.get('/mobiles', basicAuth, logger.findAllCollections);
 app.get('/logs/:appid/:id/delete', basicAuth, logger.deleteLog);
 app.get('/logout', logger.logout);
- 
+  
 console.log("------------------".yellow);
 app.listen(prop.portWeb);
 console.log('Listening on port '.yellow+prop.portWeb.red);
