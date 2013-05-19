@@ -31,32 +31,158 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <h1> ACRA Node Server</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>Server <a href="http://acra.ch/">ACRA</a> for <a href="http://nodejs.org/">Node.js</a> with data base <a href="http://www.mongodb.org/">Mongodb</a></p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p>Save all the crash reports in your own server.</p>
+
+<p><img src="ddd" alt="ddd"></p>
+
+<h2>Technologies Used</h2>
+
+<p>Server = [node.js, express, ejs, mongodb, emailjs, node-properties-parser, colors]</p>
+
+<p>Client = [bootstrap, jquery, tablesorter]</p>
+
+<h2>Installation</h2>
+
+<ol>
+<li>Download and unzip (or git clone) into a directory.</li>
+<li>Run "$ npm install"</li>
+<li>Configure /acra_server.properties with mongodb, port web, user and password access and email credentials.</li>
+<li>Run app via "$ node appAcra"</li>
+</ol><h2>Philosophy</h2>
+
+<ul>
+<li>Build a Server to replace Google Docs.</li>
+<li>Write using modern tecnologies as Node.js and Mongodb.</li>
+<li>Simple configuration with a only one properties file.</li>
+<li>Interface using Bootstrap.</li>
+</ul><h2>Features</h2>
+
+<ul>
+<li>Basic front end web pages.</li>
+<li>Send emails when receive ACRA report.</li>
+<li>Login system to protect access.</li>
+<li>Export all reports in json format.</li>
+<li>Export detail report in json format.</li>
+<li>Delete report.</li>
+<li>Multiple applications in the same server.</li>
+<li>Separate the crash in differents collections by app</li>
+</ul><h2>How to config ACRA Class in Android</h2>
+
+<ol>
+<li><p>Config Acra Class in application with the url of the server</p></li>
+<li>
+<p>Configuration URL in Java Class (http://SERVER:PORT_SERVER/logs/NAME_APP)</p>
+
+<p>2.1. SERVER (IP or DNS)</p>
+
+<p>2.2. PORT_SERVER (PORT WEB SERVER) </p>
+
+<p>2.3. NAME_APP (NAME APP where will be save all the crash)</p>
+</li>
+</ol><ul>
+<li>Example url: http://my_server:port_server/logs/my_app</li>
+</ul><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">org.acra.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.acra.annotation.*</span><span class="o">;</span>
+<span class="nd">@ReportsCrashes</span><span class="o">(</span><span class="n">formUri</span> <span class="o">=</span> <span class="s">"http://SERVER:PORT_SERVER/logs/NAME_APP"</span><span class="o">,</span> <span class="n">formKey</span><span class="o">=</span><span class="s">""</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyApplication</span> <span class="kd">extends</span> <span class="n">Application</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// The following line triggers the initialization of ACRA</span>
+    <span class="n">ACRA</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+</pre></div>
+
+<p>More information about configuration Android application <a href="https://github.com/ACRA/acra/wiki/BasicSetup">here</a></p>
+
+<h2>Config acra_server.properties</h2>
+
+<pre><code># CONFIGURATION WEB
+# Acra web server port 
+port_web = 3000
+# Web access user
+username = john
+# Web acess password
+password = john
+# Cookie config
+key = acraserver
+secret = b29a25fe160453b475d4243d12yrty342345752eeaa5bc
+
+# CONFIGURATION MONGODB
+# port mongodb
+mongodb_port = 27017
+# Ip mongodb
+mongodb_ip = localhost
+# Name Data base
+name_database = acraloggerdb
+
+
+# CONFIGURATION MAIL
+# yes or no if want send email if acra error recive
+send_mail = yes
+
+# config connection email server
+user_mail= your_email@gmail.com
+password_mail = password_mail_gmail
+host =smtp.gmail.com
+ssl = true
+
+# config email
+subject = Acra Error Server
+from = serveracra@acra.ch
+# List emails separate with comma example john@gmail,
+to = john@mycompany.com,elizabeth@mycompany.com
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h2>Configuration Mongodb</h2>
 
-<h3>Designer Templates</h3>
+<p>Automatic configuration:</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<ul>
+<li>Creation of DB automatic</li>
+<li>Creation collection automatic</li>
+<li>Independent collections by App</li>
+</ul><h2>Access server</h2>
 
-<h3>Rather Drive Stick?</h3>
+<ul>
+<li>http://my_server:port_server (and login)</li>
+</ul><h2>Thank you</h2>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Paolo Casarini that made the original implementation:</p>
 
-<h3>Authors and Contributors</h3>
+<p><a href="http://www.casarini.org/blog/2013/acra-nodejs-mongodb/">http://www.casarini.org/blog/2013/acra-nodejs-mongodb/</a></p>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<h2>License</h2>
 
-<h3>Support or Contact</h3>
+<p>( The MIT License )</p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>Copyright (c) 2013 Diego Martin Moreno </p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. </p>
       </section>
     </div>
 
@@ -68,7 +194,17 @@ $ git checkout gh-pages
       </footer>
     </div>
 
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-39395914-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
 
   </body>
 </html>
