@@ -11,7 +11,7 @@ Save all the crash reports in your own server.
 * List Apps:
 ![List Apps](http://sinclinal.com/github/List_Apps_ACRA_Node_Server.png)
 
-* List Logs:
+* List Logs (Statistics errors by mobile):
 ![List Logs](http://sinclinal.com/github/Logs_ACRA_Node_Server.png)
 
 * Detail Log:
@@ -20,7 +20,8 @@ Save all the crash reports in your own server.
 * Delete Log:
 ![Delete Log](http://sinclinal.com/github/Detail_ACRA_Node_Server_delete.png)
 
-
+### New version 0.0.2
+* Statistics errors by mobile.
 
 Technologies Used
 ------------
