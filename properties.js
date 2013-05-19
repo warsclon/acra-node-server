@@ -19,7 +19,7 @@ var FROM = "from";
 var TO = "to";
 
 console.log("------------------------".red);
-console.log("ACRA SERVER LOG 0.0.1".bold.red);
+console.log("ACRA SERVER LOG 0.0.2".bold.red);
 console.log("------------------------".red);
 console.log("Loading properties sync before start server...".red);
 var par = proper.readSync("./acra_server.properties");
