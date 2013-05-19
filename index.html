@@ -50,9 +50,9 @@
 <img src="http://sinclinal.com/github/Detail_ACRA_Node_Server_delete.png" alt="Delete Log"></p></li>
 </ul><h2>Technologies Used</h2>
 
-<p>Server = [node.js, express, ejs, mongodb, emailjs, node-properties-parser, colors]</p>
+<p>Server = [node.js, express, ejs, mongodb, emailjs, node-properties-parser, colors, moment, async]</p>
 
-<p>Client = [bootstrap, jquery, tablesorter]</p>
+<p>Client = [bootstrap, jquery, tablesorter, jqplot]</p>
 
 <h2>Installation</h2>
 
@@ -146,8 +146,11 @@ ssl = true
 # config email
 subject = Acra Error Server
 from = serveracra@acra.ch
-# List emails separate with comma example john@gmail,
+# List emails separate with comma example john@gmail,john2@gmail.com
 to = john@mycompany.com,elizabeth@mycompany.com
+
+#config date
+date_format=YYYY-MM-DD hh:mm:ss
 </code></pre>
 
 <h2>Configuration Mongodb</h2>
