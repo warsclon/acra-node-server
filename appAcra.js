@@ -7,7 +7,7 @@ var logger = require('./logger');
 var app = express();
 
 app.configure(function () {
-	app.use(express.logger('default'));  /* 'default', 'short', 'tiny', 'dev' */
+  app.use(express.logger('default'));   /* 'default', 'short', 'tiny', 'dev' */
   app.use(express.bodyParser());
 });
 
@@ -24,17 +24,20 @@ app.use(clientErrorHandler);
 app.use( express.bodyParser());
 app.set('views', __dirname + '/views');  
 app.set('view engine', 'ejs'); 
+app.use(app.router);
+
 
 //function control errors
 function clientErrorHandler(err, req, res, next) {
     console.log('client error handler found in ip:'+req.ip, err);
-    res.send(500, 'ERROR:'+err);
+    res.status(500);
+    res.render('error', {locals: {"error":err} });
 }
 
 var basicAuth = express.basicAuth(function(username, password) {
   return (username == prop.username && password == prop.password);
 }, 'Restrict area, please identify');
-  
+ 
 //Mobile  without auth
 app.post('/logs/:appid', logger.addLog);
 //Administration with auth
@@ -45,7 +48,7 @@ app.get('/logsexport/:appid', basicAuth, logger.findAllExport);
 app.get('/mobiles', basicAuth, logger.findAllCollections);
 app.get('/logs/:appid/:id/delete', basicAuth, logger.deleteLog);
 app.get('/logout', logger.logout);
-  
+ 
 console.log("------------------".yellow);
 app.listen(prop.portWeb);
 console.log('Listening on port '.yellow+prop.portWeb.red);

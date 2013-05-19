@@ -1,16 +1,33 @@
-ACRA Node Server
+ ACRA Node Server (v. 0.0.2)
 ================
 
 Server [ACRA](http://acra.ch/) for [Node.js](http://nodejs.org/) with data base [Mongodb](http://www.mongodb.org/)
 
 Save all the crash reports in your own server.
 
+* Login:
+![List Apps](http://sinclinal.com/github/Login_ACRA_Node_Server.png)
+
+* List Apps:
+![List Apps](http://sinclinal.com/github/List_Apps_ACRA_Node_Server.png)
+
+* List Logs:
+![List Logs](http://sinclinal.com/github/Logs_ACRA_Node_Server.png)
+
+* Detail Log:
+![Detail Log](http://sinclinal.com/github/Detail_ACRA_Node_Server.png)
+
+* Delete Log:
+![Delete Log](http://sinclinal.com/github/Detail_ACRA_Node_Server_delete.png)
+
+
+
 Technologies Used
 ------------
 
-Server = [node.js, express, ejs, mongodb, emailjs, node-properties-parser, colors]
+Server = [node.js, express, ejs, mongodb, emailjs, node-properties-parser, colors, moment, async]
 
-Client = [bootstrap, jquery, tablesorter]
+Client = [bootstrap, jquery, tablesorter, jqplot]
 
 Installation
 ------------
@@ -111,8 +128,11 @@ ssl = true
 # config email
 subject = Acra Error Server
 from = serveracra@acra.ch
-# List emails separate with comma example john@gmail,
+# List emails separate with comma example john@gmail,john2@gmail.com
 to = john@mycompany.com,elizabeth@mycompany.com
+
+#config date
+date_format=YYYY-MM-DD hh:mm:ss
 ```
 
 ## Configuration Mongodb
@@ -157,4 +177,4 @@ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 

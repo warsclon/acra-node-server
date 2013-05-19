@@ -9,6 +9,15 @@
 	<script type="text/javascript" src="/js/jquery-1.9.js"></script> 
 	<script type="text/javascript" src="/js/jquery.metadata.js"></script> 
 	<script type="text/javascript" src="/js/tablesorter-mini.js"></script> 
+    <!-- jqplot -->
+    <script type="text/javascript" src="/jqplot/jquery.jqplot.min.js"></script>
+    <script type="text/javascript" src="/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+    <script type="text/javascript" src="/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
+    <script type="text/javascript" src="/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script type="text/javascript" src="/jqplot/plugins/jqplot.pointLabels.min.js"></script>
+    <link rel="stylesheet" type="text/css" hrf="/jqplot/jquery.jqplot.min.css" /> 
+
+    
   </head>
   <style type="text/css">
       body {
@@ -49,8 +58,20 @@
         $("#tabletLogs").tablesorter(); 
     } 
 ); 
+
+
+
    
 	</script>
+    
+
+    
+    
+<p>
+    
+
+
+
 <body> 
   
 <div class="navbar">
@@ -65,9 +86,19 @@
 
   
 <p>
-  
-  
-  
+
+<!-- graphic -->
+<%
+if (mobiles.length) {
+%>
+<div style="margin-top:10px;margin-bottom:10px;margin-right:10px;margin-left:10px;">
+    <div id="chart1" style="height:300px;width:1024px;"></div>
+</div> 
+<%
+}
+%>
+<!-- end graphic -->
+<div style="margin-top:10px;margin-bottom:10px;margin-right:10px;margin-left:10px;">  
 <table id="tabletLogs" class="tablesorter" border="0" cellpadding="0" cellspacing="1"> 
 <thead> 
 <tr> 
@@ -102,7 +133,55 @@
 <% } %>
 </tbody> 
 </table>
+</div>
 
+<% 
+//build graphics
+if (mobiles.length) { 
+    
+    var s1 = "";
+    var ticks = "";
+
+    mobiles.forEach(function(mobile){ 
+        ticks = ticks+"'"+mobile._id.movile+"'"+",";
+        s1 = s1+mobile.number+",";
+    }); 
+    
+    ticks = ticks.substring(0,ticks.length-1);
+    s1 = s1.substring(0,s1.length-1);
+    
+    %>
+  
+    <script>
+    $(document).ready(function(){         
+        $.jqplot.config.enablePlugins = true;       
+        var s1 = [<%= s1 %>];         
+        var ticks = [<%= ticks %>];                   
+        plot1 = $.jqplot('chart1', [s1], {             
+    	// Only animate if we're not using excanvas (not in IE 7 or IE 8)..             
+    	animate: !$.jqplot.use_excanvas, 
+        title: 'Mobiles with errors',
+    	seriesDefaults:{                 
+    	renderer:$.jqplot.BarRenderer,                 
+    	pointLabels: { show: true }             },             
+    	axes: {                 
+    	xaxis: {                     
+    	renderer: $.jqplot.CategoryAxisRenderer,                     
+    	ticks: ticks                 }             },             
+    	highlighter: { show: false }         });              
+            /*        
+        	$('#chart1').bind('jqplotDataClick',              
+        	function (ev, seriesIndex, pointIndex, data) {                 
+        	$('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);             }         );     
+            */
+        
+    	}); 
+    
+    </script>    
+  
+  
+  
+<% } %>    
 
   
 </body> 

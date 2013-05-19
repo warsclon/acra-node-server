@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+ 
+<html>
+<head>
+ 
+    <title>Bar Colors Example</title>
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="plugins/jqplot.barRenderer.min.js"></script>
+<script type="text/javascript" src="plugins/jqplot.pieRenderer.min.js"></script>
+<script type="text/javascript" src="plugins/jqplot.categoryAxisRenderer.min.js"></script>
+<script type="text/javascript" src="plugins/jqplot.pointLabels.min.js"></script>
+<link rel="stylesheet" type="text/css" hrf="jquery.jqplot.min.css" /> 
+
+
+
+</head>
+<body>
+
+<span id="info1">vacio</span>
+<p>
+<div id="chart1" style="height:400px;width:900px; "></div>
+
+<!--
+[ { _id: { movile: 'E15a' }, number: 27 },
+  { _id: { movile: 'E10a' }, number: 17 },
+  { _id: { movile: 'GT-S5360' }, number: 17 },
+  { _id: { movile: 'GT-I9100' }, number: 11 },
+  { _id: { movile: 'FUNC SATURN-01' }, number: 8 },
+  { _id: { movile: 'Tablet Mint 8x8i' }, number: 8 },
+  { _id: { movile: 'XT615' }, number: 8 },
+  { _id: { movile: 'GT540' }, number: 8 },
+  { _id: { movile: 'GT-P3100' }, number: 7 },
+  { _id: { movile: 'BP-I9300' }, number: 7 } ]
+[ { _id: { year: 2013, month: 4 }, number: 64 },
+  { _id: { year: 2013, month: 3 }, number: 124 },
+  { _id: { year: 2013, month: 2 }, number: 2 } ]
+-->
+
+
+<script>
+$(document).ready(function(){         
+	$.jqplot.config.enablePlugins = true;         
+	var s1 = [27, 17, 17, 11, 8, 8, 8];         
+	var ticks = ['E15a', 'E10a', 'GT-S5360', 'GT-I9100','FUNC SATURN-01','Tablet Mint 8x8i','XT615'];                   
+	plot1 = $.jqplot('chart1', [s1], {             
+	// Only animate if we're not using excanvas (not in IE 7 or IE 8)..             
+	animate: !$.jqplot.use_excanvas,             
+	seriesDefaults:{                 
+	renderer:$.jqplot.BarRenderer,                 
+	pointLabels: { show: true }             },             
+	axes: {                 
+	xaxis: {                     
+	renderer: $.jqplot.CategoryAxisRenderer,                     
+	ticks: ticks                 }             },             
+	highlighter: { show: false }         });               
+	$('#chart1').bind('jqplotDataClick',              
+	function (ev, seriesIndex, pointIndex, data) {                 
+	$('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);             }         );     }); 
+
+</script>
+
+</body>
+</html>
