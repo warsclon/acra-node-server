@@ -31,7 +31,8 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1> ACRA Node Server (v. 0.0.2)</h1>
+        <h1>
+<a name="-acra-node-server-v-003" class="anchor" href="#-acra-node-server-v-003"><span class="octicon octicon-link"></span></a> ACRA Node Server (v. 0.0.3)</h1>
 
 <p>Server <a href="http://acra.ch/">ACRA</a> for <a href="http://nodejs.org/">Node.js</a> with data base <a href="http://www.mongodb.org/">Mongodb</a></p>
 
@@ -39,40 +40,51 @@
 
 <ul>
 <li><p>Login:
-<img src="http://sinclinal.com/github/Login_ACRA_Node_Server.png" alt="List Apps"></p></li>
+<img src="http://sinclinal.com/github/Login_ACRA_Node_Server3.png" alt="List Apps"></p></li>
 <li><p>List Apps:
 <img src="http://sinclinal.com/github/List_Apps_ACRA_Node_Server.png" alt="List Apps"></p></li>
 <li><p>List Logs (Statistics errors by mobile):
-<img src="http://sinclinal.com/github/Logs_ACRA_Node_Server.png" alt="List Logs"></p></li>
+<img src="http://sinclinal.com/github/Logs_ACRA_Node_Server3.png" alt="List Logs"></p></li>
 <li><p>Detail Log:
 <img src="http://sinclinal.com/github/Detail_ACRA_Node_Server.png" alt="Detail Log"></p></li>
 <li><p>Delete Log:
 <img src="http://sinclinal.com/github/Detail_ACRA_Node_Server_delete.png" alt="Delete Log"></p></li>
-</ul><h3>New version 0.0.2</h3>
+</ul><h3>
+<a name="version-003" class="anchor" href="#version-003"><span class="octicon octicon-link"></span></a>version 0.0.3</h3>
 
 <ul>
-<li>Statistics errors by mobile.</li>
-</ul><h2>Technologies Used</h2>
+<li>Statistics by android version.</li>
+<li>Statistics by date error.</li>
+</ul><h3>
+<a name="version-002" class="anchor" href="#version-002"><span class="octicon octicon-link"></span></a>version 0.0.2</h3>
+
+<ul>
+<li>Statistics by mobile.</li>
+</ul><h2>
+<a name="technologies-used" class="anchor" href="#technologies-used"><span class="octicon octicon-link"></span></a>Technologies Used</h2>
 
 <p>Server = [node.js, express, ejs, mongodb, emailjs, node-properties-parser, colors, moment, async]</p>
 
 <p>Client = [bootstrap, jquery, tablesorter, jqplot]</p>
 
-<h2>Installation</h2>
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <ol>
 <li>Download and unzip (or git clone) into a directory.</li>
 <li>Run "$ npm install"</li>
 <li>Configure /acra_server.properties with mongodb, port web, user and password access and email credentials.</li>
 <li>Run app via "$ node appAcra"</li>
-</ol><h2>Philosophy</h2>
+</ol><h2>
+<a name="philosophy" class="anchor" href="#philosophy"><span class="octicon octicon-link"></span></a>Philosophy</h2>
 
 <ul>
 <li>Build a Server to replace Google Docs.</li>
 <li>Write using modern tecnologies as Node.js and Mongodb.</li>
 <li>Simple configuration with a only one properties file.</li>
 <li>Interface using Bootstrap.</li>
-</ul><h2>Features</h2>
+</ul><h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
 
 <ul>
 <li>Basic front end web pages.</li>
@@ -83,7 +95,26 @@
 <li>Delete report.</li>
 <li>Multiple applications in the same server.</li>
 <li>Separate the crash in differents collections by app</li>
-</ul><h2>How to config ACRA Class in Android</h2>
+</ul><h2>
+<a name="if-you-have-previously-version-002-or-001" class="anchor" href="#if-you-have-previously-version-002-or-001"><span class="octicon octicon-link"></span></a>If you have previously version 0.0.2 or 0.0.1</h2>
+
+<p>You need to convert the USER_CRASH_DATE from Text to Date format, the solution is execute a script:</p>
+
+<p>modify_db.js</p>
+
+<p>Edit the script:</p>
+
+<pre><code>var NAME_COLLECTION = "your_collection";
+var DB_URL = "mongodb://127.0.0.1:27017/your_db";
+</code></pre>
+
+<p>And Execute</p>
+
+<pre><code>node modify_db.js
+</code></pre>
+
+<h2>
+<a name="how-to-config-acra-class-in-android" class="anchor" href="#how-to-config-acra-class-in-android"><span class="octicon octicon-link"></span></a>How to config ACRA Class in Android</h2>
 
 <ol>
 <li><p>Config Acra Class in application with the url of the server</p></li>
@@ -115,7 +146,8 @@
 
 <p>More information about configuration Android application <a href="https://github.com/ACRA/acra/wiki/BasicSetup">here</a></p>
 
-<h2>Config acra_server.properties</h2>
+<h2>
+<a name="config-acra_serverproperties" class="anchor" href="#config-acra_serverproperties"><span class="octicon octicon-link"></span></a>Config acra_server.properties</h2>
 
 <pre><code># CONFIGURATION WEB
 # Acra web server port 
@@ -157,7 +189,8 @@ to = john@mycompany.com,elizabeth@mycompany.com
 date_format=YYYY-MM-DD hh:mm:ss
 </code></pre>
 
-<h2>Configuration Mongodb</h2>
+<h2>
+<a name="configuration-mongodb" class="anchor" href="#configuration-mongodb"><span class="octicon octicon-link"></span></a>Configuration Mongodb</h2>
 
 <p>Automatic configuration:</p>
 
@@ -165,17 +198,20 @@ date_format=YYYY-MM-DD hh:mm:ss
 <li>Creation of DB automatic</li>
 <li>Creation collection automatic</li>
 <li>Independent collections by App</li>
-</ul><h2>Access server</h2>
+</ul><h2>
+<a name="access-server" class="anchor" href="#access-server"><span class="octicon octicon-link"></span></a>Access server</h2>
 
 <ul>
 <li>http://my_server:port_server (and login)</li>
-</ul><h2>Thank you</h2>
+</ul><h2>
+<a name="thank-you" class="anchor" href="#thank-you"><span class="octicon octicon-link"></span></a>Thank you</h2>
 
 <p>Paolo Casarini that made the original implementation:</p>
 
 <p><a href="http://www.casarini.org/blog/2013/acra-nodejs-mongodb/">http://www.casarini.org/blog/2013/acra-nodejs-mongodb/</a></p>
 
-<h2>License</h2>
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>( The MIT License )</p>
 
