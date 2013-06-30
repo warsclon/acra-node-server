@@ -17,9 +17,10 @@ var SSL = "ssl";
 var SUBJECT = "subject";
 var FROM = "from";
 var TO = "to";
+var DATE_FORMAT = "date_format";
 
 console.log("------------------------".red);
-console.log("ACRA SERVER LOG 0.0.2".bold.red);
+console.log("ACRA SERVER LOG 0.0.3".bold.red);
 console.log("------------------------".red);
 console.log("Loading properties sync before start server...".red);
 var par = proper.readSync("./acra_server.properties");

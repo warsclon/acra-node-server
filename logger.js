@@ -4,7 +4,7 @@ var email = require('./email.js');
 var moment = require('moment');
 var async = require('async');
 var ejs = require('ejs');
-   
+
 var DB_NAME = prop.name_database;
 
 var Server = mongo.Server,
@@ -14,14 +14,9 @@ var Server = mongo.Server,
 var server = new Server(prop.mongodbIp, prop.mongodbPort, {auto_reconnect: true, safe:false,journal:true});
 var db= new Db(DB_NAME, server);
 
-
-ejs.filters.formatOk = function(date){
-  return moment(date).format('YYYY-MM-DD hh:mm:ss');
-}
-
 db.open(function(err, db) {
   if(!err) {
-        console.log("Connected to data base ".yellow+DB_NAME.red);
+   	console.log("Connected to data base ".yellow+DB_NAME.red);
 		console.log("------------------".yellow);
    }
 });
@@ -100,14 +95,33 @@ exports.addLog = function(req, res) {
   db.collection(appid, function(err, collection) {
     collection.insert(log, {safe:true}, function(err, result) {
       if (err) {
+      	console.log("Add log error:"+err);
         res.send({'error':'An error has occurred'});
       } else {
-		//After insert send email
-		email.send(appid,log);
+				console.log("addLog:OK save");
+				//format date text to date format
+				//to aggregate dates
+				formatDate(result,collection);
+				//After insert send email
+				email.send(appid,log);
         res.send(result[0]);
       }
     });
   });
+}
+
+function formatDate(toSave,collection) {
+	var doc = toSave[0];
+	doc.USER_CRASH_DATE = new Date(doc.USER_CRASH_DATE);
+	collection.update({_id:doc._id },   {
+		$set: { 'USER_CRASH_DATE': doc.USER_CRASH_DATE },
+	}, function(err) {
+		if (!err) {
+			console.log("Error:"+err);	
+		} else {
+			console.log("Modify date format");	
+		}
+	});
 }
 
 //Logout and delete cookie
@@ -119,11 +133,22 @@ exports.logout =  function (req, res) {
 }
 
 
-//Function to read phones and logs in parallel
+//Function to read phones, dates and logs in parallel
 function loadListLogs(appid,res) {
     var resultSearch = {};
     async.parallel([
         function(callback) {
+            db.collection(appid, function(err, collection) {
+		    collection.aggregate([
+				{ $group : { _id : {android :"$ANDROID_VERSION"} , number : { $sum : 1 } } },
+				{ $sort : { number : -1 } },
+				{ $limit:10 },
+		], function(err, result) {
+            resultSearch.android = result;
+            callback();
+		});
+	});
+        },        function(callback) {
             db.collection(appid, function(err, collection) {
 		    collection.aggregate([
 				{ $group : { _id : {movile :"$PHONE_MODEL"} , number : { $sum : 1 } } },
@@ -134,6 +159,18 @@ function loadListLogs(appid,res) {
             callback();
 		});
 	});
+        },
+        function(callback) {
+			db.collection(appid, function(err, collection) {
+				collection.aggregate([
+					{ $group : { _id : {year:{$year :"$USER_CRASH_DATE"},month:{$month :"$USER_CRASH_DATE"}} , number : { $sum : 1 } } },
+					{ $sort : { _id : -1 } },
+					{ $limit : 10 },				
+				], function(err, result) {
+					resultSearch.dates = result;
+					callback();
+				});
+			});
         },
         function(callback) {        
             db.collection(appid, function(err, collection) {
@@ -149,7 +186,7 @@ function loadListLogs(appid,res) {
             });
         }
     ], function(err) { 
-        res.render('listLogs', {locals: {"list":resultSearch.logs,"mobiles":resultSearch.agg_phone,"appid":appid} });
+        res.render('listLogs', {locals: {"list":resultSearch.logs,"mobiles":resultSearch.agg_phone,"android":resultSearch.android,"dates":resultSearch.dates,"appid":appid} });
     });
 }
 

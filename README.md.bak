@@ -5,12 +5,12 @@ Server [ACRA](http://acra.ch/) for [Node.js](http://nodejs.org/) with data base 
 
 Save all the crash reports in your own server.
 
-### version 0.0.3
+### New version 0.0.3
 * Statistics by android version.
 * Statistics by date error.
 
 
-### version 0.0.2
+### New version 0.0.2
 * Statistics by mobile.
 
 Technologies Used

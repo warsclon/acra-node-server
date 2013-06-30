@@ -11,10 +11,12 @@
 	<script type="text/javascript" src="/js/tablesorter-mini.js"></script> 
     <!-- jqplot -->
     <script type="text/javascript" src="/jqplot/jquery.jqplot.min.js"></script>
+
     <script type="text/javascript" src="/jqplot/plugins/jqplot.barRenderer.min.js"></script>
     <script type="text/javascript" src="/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
     <script type="text/javascript" src="/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
     <script type="text/javascript" src="/jqplot/plugins/jqplot.pointLabels.min.js"></script>
+	
     <link rel="stylesheet" type="text/css" hrf="/jqplot/jquery.jqplot.min.css" /> 
 
     
@@ -88,15 +90,46 @@
 <p>
 
 <!-- graphic -->
-<%
-if (mobiles.length) {
-%>
-<div style="margin-top:10px;margin-bottom:10px;margin-right:10px;margin-left:10px;">
-    <div id="chart1" style="height:300px;width:1024px;"></div>
-</div> 
-<%
-}
-%>
+<table>
+	<tr>
+	<%
+	if (mobiles.length) {
+	%>
+		<td>
+			<div style="margin-top:10px;margin-bottom:10px;margin-right:10px;margin-left:10px;">
+			    <div id="chart1" style="height:300px;width:600px;"></div>
+			</div> 
+		</td>
+	<%
+	}
+	%>
+	<%
+	if (android.length) {
+	%>
+		<td>
+			<div style="margin-top:10px;margin-bottom:10px;margin-right:10px;margin-left:10px;">
+			    <div id="chart_android" style="height:300px;width:600px;"></div>
+			</div>
+		</td> 
+	<%
+	}
+	%>
+	</tr>
+	<%
+	if (dates.length) {
+	%>
+	<tr>
+		<td colspan="2">
+			<div style="margin-top:10px;margin-bottom:10px;margin-right:10px;margin-left:10px;">
+			    <div id="chart_dates" style="height:300px;width:1200px;"></div>
+			</div>
+		</td> 
+	</tr>
+	<%
+	}
+	%>
+
+</table>
 <!-- end graphic -->
 <div style="margin-top:10px;margin-bottom:10px;margin-right:10px;margin-left:10px;">  
 <table id="tabletLogs" class="tablesorter" border="0" cellpadding="0" cellspacing="1"> 
@@ -134,6 +167,7 @@ if (mobiles.length) {
 </tbody> 
 </table>
 </div>
+
 
 <% 
 //build graphics
@@ -183,6 +217,103 @@ if (mobiles.length) {
   
 <% } %>    
 
+
+<% 
+//build graphics
+if (android.length) { 
+    
+    var s2= "";
+    var ticks2 = "";
+
+    android.forEach(function(andro){ 
+        ticks2 = ticks2+"'"+andro._id.android+"'"+",";
+        s2 = s2+andro.number+",";
+    }); 
+    
+    ticks2 = ticks2.substring(0,ticks2.length-1);
+    s2 = s2.substring(0,s2.length-1);
+    
+    %>
+  
+    <script>
+    $(document).ready(function(){         
+        $.jqplot.config.enablePlugins = true;       
+        var s2 = [<%= s2 %>];         
+        var ticks2 = [<%= ticks2 %>];                   
+        plot1 = $.jqplot('chart_android', [s2], {             
+    	// Only animate if we're not using excanvas (not in IE 7 or IE 8)..             
+    	animate: !$.jqplot.use_excanvas, 
+        title: 'Android versions',
+    	seriesDefaults:{                 
+    	renderer:$.jqplot.BarRenderer,                 
+    	pointLabels: { show: true }             },             
+    	axes: {                 
+    	xaxis: {                     
+    	renderer: $.jqplot.CategoryAxisRenderer,                     
+    	ticks: ticks2                 }             },             
+    	highlighter: { show: false }         });              
+            /*        
+        	$('#chart1').bind('jqplotDataClick',              
+        	function (ev, seriesIndex, pointIndex, data) {                 
+        	$('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);             }         );     
+            */
+        
+    	}); 
+    
+    </script>    
+  
+  
+  
+<% } %>
+  
+  
+<% 
+//build graphics
+if (dates.length) { 
+    
+    var s3= "";
+    var ticks3 = "";
+
+    dates.forEach(function(date){ 
+        ticks3 = ticks3+"'"+date._id.year+"/"+date._id.month+"'"+",";
+        s3 = s3+date.number+",";
+    }); 
+    
+    ticks3= ticks3.substring(0,ticks3.length-1);
+    s3 = s3.substring(0,s3.length-1);
+    
+    %>
+  
+    <script>
+    $(document).ready(function(){         
+        $.jqplot.config.enablePlugins = true;       
+        var s3 = [<%= s3 %>];         
+        var ticks3 = [<%= ticks3 %>];                   
+        plot1 = $.jqplot('chart_dates', [s3], {             
+    	// Only animate if we're not using excanvas (not in IE 7 or IE 8)..             
+    	animate: !$.jqplot.use_excanvas, 
+        title: 'Dates',
+    	seriesDefaults:{                 
+    	renderer:$.jqplot.BarRenderer,                 
+    	pointLabels: { show: true }             },             
+    	axes: {                 
+    	xaxis: {                     
+    	renderer: $.jqplot.CategoryAxisRenderer,                     
+    	ticks: ticks3                 }             },             
+    	highlighter: { show: false }         });              
+            /*        
+        	$('#chart1').bind('jqplotDataClick',              
+        	function (ev, seriesIndex, pointIndex, data) {                 
+        	$('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);             }         );     
+            */
+        
+    	}); 
+    
+    </script>    
+  
+  
+  
+<% } %>
   
 </body> 
 </html> 
