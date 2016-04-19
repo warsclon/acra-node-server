@@ -1,11 +1,11 @@
- ACRA Node Server (v. 0.0.3)
+ ACRA Node Server (v. 0.0.4)
 ================
 
 Server [ACRA](http://acra.ch/) for [Node.js](http://nodejs.org/) with data base [Mongodb](http://www.mongodb.org/)
 
 Save all the crash reports in your own server.
 
-### version 0.0.3
+### version 0.0.4
 * Updated to work with Express 4.x
 * Updated to work with newer MongoDB
 
@@ -20,14 +20,12 @@ Save all the crash reports in your own server.
 
 Technologies Used
 ------------
-
 Server = [node.js, express, ejs, mongodb, emailjs, node-properties-parser, colors, moment, async]
 
 Client = [bootstrap, jquery, tablesorter, jqplot]
 
 Installation
 ------------
-
  1. Download and unzip (or git clone) into a directory.
  2. Run "$ npm install"
  3. Configure /acra_server.properties with mongodb, port web, user and password access and email credentials.
@@ -36,7 +34,6 @@ Installation
 
 Philosophy
 ------------
-
  * Build a Server to replace Google Docs.
  * Write using modern tecnologies as Node.js and Mongodb.
  * Simple configuration with a only one properties file.
@@ -44,7 +41,6 @@ Philosophy
 
 Features
 ------------
-
  * Basic front end web pages.
  * Send emails when receive ACRA report.
  * Login system to protect access.
@@ -150,7 +146,6 @@ date_format=YYYY-MM-DD hh:mm:ss
 ```
 
 ## Configuration Mongodb
-
 Automatic configuration:
 
  * Creation of DB automatic
@@ -158,7 +153,6 @@ Automatic configuration:
  * Independent collections by App
 
 ## Access server
-
  * http://my_server:port_server (and login)
 
 

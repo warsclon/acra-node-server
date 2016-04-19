@@ -56,7 +56,7 @@ app.get('/mobiles', auth, acraLogger.findAllCollections);
 app.get('/logs/:appid/:id/delete', auth, acraLogger.deleteLog);
 app.get('/logout', acraLogger.logout);
 
-prop.loadProperties(function() {
+prop.loadProperties(() => {
   acraLogger.open(prop);
   app.use(session({
     secret: prop.secret,

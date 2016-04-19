@@ -8,7 +8,7 @@ var server  = email.server.connect({
    ssl:     prop.ssl
 });
 
-exports.send = function send (mobile,log) {
+exports.send = function send(mobile,log) {
 	if (prop.send_mail == 'yes') {
 		console.log('Send email with error model:'+log.PHONE_MODEL);
 		// send the message and get a callback with an error or details of the message that was sent
@@ -24,7 +24,10 @@ exports.send = function send (mobile,log) {
 		   to:      prop.to,
 		   cc:      "",
 		   subject: prop.subject+ " from Mobile "+mobile
-		}, function(err, message) { console.log(err || message); });
+		}, (err, message) => 
+			{ 
+				console.log(err || message); 
+			});
 	}
 }
 
