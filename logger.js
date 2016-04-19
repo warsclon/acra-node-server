@@ -1,44 +1,44 @@
 var mongo = require('mongodb');
-var prop = require('./properties.js');
 var email = require('./email.js');
 var moment = require('moment');
 var async = require('async');
 var ejs = require('ejs');
 
-var DB_NAME = prop.name_database;
-
-var Server = mongo.Server,
-  Db = mongo.Db,
-  BSON = mongo.BSONPure;
-
-var server = new Server(prop.mongodbIp, prop.mongodbPort, {auto_reconnect: true, safe:false,journal:true});
-var db= new Db(DB_NAME, server);
-
-db.open(function(err, db) {
-  if(!err) {
-   	console.log("Connected to data base ".yellow+DB_NAME.red);
-		console.log("------------------".yellow);
-   }
-});
+var l = {
+    server: null,
+    db: null,
+    prop: null,
+    open: function(p) {
+        l.prop = p;
+        l.server = new mongo.Server(l.prop.mongodbIp, l.prop.mongodbPort, {auto_reconnect: true, safe:false,journal:true});
+        l.db = new mongo.Db(l.prop.name_database, l.server);
+        l.db.open(function(err, db) {
+            if(!err) {
+                console.log("Connected to data base ".yellow+l.prop.name_database.red);
+                console.log("------------------".yellow);
+            }
+        });
+    }
+};
 
 //Export detail log of app in json format
-exports.findByIdDetailExport = function(req, res) {
+l.findByIdDetailExport = function(req, res) {
     var appid = req.params.appid;
     var id = req.params.id;
     console.log("findByIdDetailExport.appid:"+appid);    
     console.log("findByIdDetailExport.id:"+id);    
-    db.collection(appid, function(err, collection) {
-        collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+    l.db.collection(appid, function(err, collection) {
+        collection.findOne({'_id':new mongo.BSONPure.ObjectID(id)}, function(err, item) {
             res.send(item);
         });
     });
 };
 
 //Export all logs of app in json format
-exports.findAllExport = function(req, res) {
+l.findAllExport = function(req, res) {
     var appid = req.params.appid;
     console.log("findAllExport.appid:"+appid);    
-    db.collection(appid, function(err, collection) {
+    l.db.collection(appid, function(err, collection) {
         collection.find().toArray(function(err, items) {
 			res.send(items);
         });
@@ -46,53 +46,53 @@ exports.findAllExport = function(req, res) {
 };
 
 // VIEW - /views/detail.ejs
-exports.findByIdDetail = function(req, res) {
+l.findByIdDetail = function(req, res) {
   var appid = req.params.appid;
   var id = req.params.id;
   console.log("findByIdDetail.appid:"+appid);    
   console.log("findByIdDetail.id:"+id);    
-  db.collection(appid, function(err, collection) {
-    collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-        res.render('detail', {locals: {"log":item,"appid":appid,"id":id} });
+  l.db.collection(appid, function(err, collection) {
+    collection.findOne({'_id':new mongo.BSONPure.ObjectID(id)}, function(err, item) {
+        res.render('detail', {log: item, appid: appid, id: id});
     });
   });
 };
 
 // VIEW - /views/listLogs.ejs
-exports.findAll = function(req, res) {
+l.findAll = function(req, res) {
     var appid = req.params.appid;
     console.log("findAll.appid:"+appid);    
     loadListLogs(appid,res);
 };
 
 // VIEW - /views/listMobiles.ejs
-exports.findAllCollections = function(req, res) {
-  console.log("findAllCollections");    
-  db.collectionNames(function(err, names){ 
-	res.render('listApps', {locals: {"list":names,"dbname":prop.name_database}});
-  });  
+l.findAllCollections = function(req, res) {
+    console.log("findAllCollections");    
+    l.db.listCollections().toArray(function(err, names) {
+        res.render('listApps', { list: names, dbname: l.prop.name_database });
+    });  
 }; 
 
 // VIEW - /views/delete.ejs
-exports.deleteLog = function(req, res) {
+l.deleteLog = function(req, res) {
     var appid = req.params.appid;
     var id = req.params.id;
     console.log("deleteLog.appid:"+appid);    
     console.log("deleteLog.id:"+id);  
-    db.collection(appid, function(err, collection) {
-        collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
-    	    res.render('delete', {locals: {"appid":appid,"err":err}});
+    l.db.collection(appid, function(err, collection) {
+        collection.remove({'_id':new mongo.BSONPure.ObjectID(id)}, {safe:true}, function(err, result) {
+    	    res.render('delete', {appid: appid, err: err});
         });
     });
 }
 
 // IMPORTANT - Method without security access
 // Method to add info from  mobile
-exports.addLog = function(req, res) {
+l.addLog = function(req, res) {
   var appid = req.params.appid;
   var log = req.body;
   console.log("addLog.appid:"+appid);    
-  db.collection(appid, function(err, collection) {
+  l.db.collection(appid, function(err, collection) {
     collection.insert(log, {safe:true}, function(err, result) {
       if (err) {
       	console.log("Add log error:"+err);
@@ -125,10 +125,10 @@ function formatDate(toSave,collection) {
 }
 
 //Logout and delete cookie
-exports.logout =  function (req, res) {
+l.logout =  function (req, res) {
   console.log("logout");    
   req.session = null;
-  res.clearCookie(prop.key);
+  res.clearCookie(l.prop.key);
   res.redirect('/index.html');
 }
 
@@ -138,7 +138,7 @@ function loadListLogs(appid,res) {
     var resultSearch = {};
     async.parallel([
         function(callback) {
-            db.collection(appid, function(err, collection) {
+            l.db.collection(appid, function(err, collection) {
 		    collection.aggregate([
 				{ $group : { _id : {android :"$ANDROID_VERSION"} , number : { $sum : 1 } } },
 				{ $sort : { number : -1 } },
@@ -149,7 +149,7 @@ function loadListLogs(appid,res) {
 		});
 	});
         },        function(callback) {
-            db.collection(appid, function(err, collection) {
+            l.db.collection(appid, function(err, collection) {
 		    collection.aggregate([
 				{ $group : { _id : {movile :"$PHONE_MODEL"} , number : { $sum : 1 } } },
 				{ $sort : { number : -1 } },
@@ -161,7 +161,7 @@ function loadListLogs(appid,res) {
 	});
         },
         function(callback) {
-			db.collection(appid, function(err, collection) {
+			l.db.collection(appid, function(err, collection) {
 				collection.aggregate([
 					{ $group : { _id : {year:{$year :"$USER_CRASH_DATE"},month:{$month :"$USER_CRASH_DATE"}} , number : { $sum : 1 } } },
 					{ $sort : { _id : -1 } },
@@ -173,11 +173,11 @@ function loadListLogs(appid,res) {
 			});
         },
         function(callback) {        
-            db.collection(appid, function(err, collection) {
+            l.db.collection(appid, function(err, collection) {
                 collection.find().toArray(function(err, items) {
             		for (var i = 0; i < items.length; i++) {
         				if (items[i].USER_APP_START_DATE.length > 0 ) {
-        					items[i].USER_APP_START_DATE = moment(items[i].USER_APP_START_DATE).format(prop.date_format);
+        					items[i].USER_APP_START_DATE = moment(items[i].USER_APP_START_DATE).format(l.prop.date_format);
         				}
                     }	
                     resultSearch.logs = items;
@@ -186,7 +186,8 @@ function loadListLogs(appid,res) {
             });
         }
     ], function(err) { 
-        res.render('listLogs', {locals: {"list":resultSearch.logs,"mobiles":resultSearch.agg_phone,"android":resultSearch.android,"dates":resultSearch.dates,"appid":appid} });
+        res.render('listLogs', {list: resultSearch.logs, mobiles: resultSearch.agg_phone, android: resultSearch.android, dates: resultSearch.dates, appid: appid});
     });
 }
 
+module.exports = l;

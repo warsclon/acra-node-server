@@ -6,6 +6,11 @@ Server [ACRA](http://acra.ch/) for [Node.js](http://nodejs.org/) with data base 
 Save all the crash reports in your own server.
 
 ### version 0.0.3
+* Updated to work with Express 4.x
+* Updated to work with newer MongoDB
+
+
+### version 0.0.3
 * Statistics by android version.
 * Statistics by date error.
 
