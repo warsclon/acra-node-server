@@ -8,7 +8,7 @@ var l = {
     server: null,
     db: null,
     prop: null,
-    open: function(p) {
+    open: function(p, cb) {
         l.prop = p;
         l.server = new mongo.Server(l.prop.mongodbIp, l.prop.mongodbPort, {auto_reconnect: true, safe:false,journal:true});
         l.db = new mongo.Db(l.prop.name_database, l.server);
@@ -17,6 +17,7 @@ var l = {
                 console.log("Connected to data base ".yellow+l.prop.name_database.red);
                 console.log("------------------".yellow);
             }
+            cb(err);
         });
     }
 };

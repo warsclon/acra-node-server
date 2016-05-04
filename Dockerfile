@@ -1,4 +1,4 @@
-FROM node:4.2.0-onbuild
+FROM node:4.4.1-slim
 MAINTAINER Rob Humphris
 
 #Run npm install

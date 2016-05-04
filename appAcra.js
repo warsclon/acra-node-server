@@ -12,7 +12,7 @@ var basicAuth = require('basic-auth');
 //function control errors
 function clientErrorHandler(err, req, res, next) {
     console.log('client error handler found in ip:'+req.ip, err);
-    res.status(500);
+    res.sendStatus(500);
     res.render('error', {locals: {"error":err} });
 }
 
@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 function auth (req, res, next) {
   function unauthorized(res) {
     res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-    return res.send(401);
+    return res.sendStatus(401);
   };
   var user = basicAuth(req);
 
@@ -57,8 +57,8 @@ app.get('/logs/:appid/:id/delete', auth, acraLogger.deleteLog);
 app.get('/logout', acraLogger.logout);
 
 prop.loadProperties(() => {
-  acraLogger.open(prop);
-  app.use(session({
+  acraLogger.open(prop, function(err) {
+    app.use(session({
     secret: prop.secret,
     resave: false,
     saveUninitialized: false,
@@ -67,6 +67,7 @@ prop.loadProperties(() => {
   console.log("------------------".yellow);
   app.listen(prop.portWeb);
   console.log('Listening on port '.yellow+prop.portWeb.red);
+  });
 });
 
 
