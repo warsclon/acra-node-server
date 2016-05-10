@@ -1,5 +1,5 @@
 {
-  "name": "acra_server_log",
+  "name": "acra-node-server",
   "description": "Acra Server with nodejs and mongodb",
   "author": "Diego Martin Moreno<diego.mm@gmail.com>",
   "version": "0.0.4",
@@ -8,7 +8,6 @@
     "type": "git",
     "url": "https://github.com/RobHumphris/acra-node-server.git"
   },
-  "license": "ISC",
   "dependencies": {
     "async": ">= 1.5.2",
     "basic-auth": ">= 1.0.3",
@@ -25,5 +24,10 @@
     "morgan": ">= 1.7.0",
     "properties-parser": ">= 0.3.1",
     "serve-favicon": ">= 2.3.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "supertest": "^1.0.1",
+    "chai": "^2.3.0"
   }
 }

@@ -8,7 +8,7 @@ var l = {
     server: null,
     db: null,
     prop: null,
-    open: function(p) {
+    open: function(p, cb) {
         l.prop = p;
         l.server = new mongo.Server(l.prop.mongodbIp, l.prop.mongodbPort, {auto_reconnect: true, safe:false,journal:true});
         l.db = new mongo.Db(l.prop.name_database, l.server);
@@ -17,6 +17,7 @@ var l = {
                 console.log("Connected to data base ".yellow+l.prop.name_database.red);
                 console.log("------------------".yellow);
             }
+            cb(err);
         });
     }
 };
@@ -98,30 +99,12 @@ l.addLog = function(req, res) {
       	console.log("Add log error:"+err);
         res.send({'error':'An error has occurred'});
       } else {
-				console.log("addLog:OK save");
-				//format date text to date format
-				//to aggregate dates
-				formatDate(result,collection);
-				//After insert send email
-				email.send(appid,log);
+        console.log("addLog:OK save");
+        email.send(appid, log);
         res.send(result[0]);
       }
     });
   });
-}
-
-function formatDate(toSave,collection) {
-	var doc = toSave[0];
-	doc.USER_CRASH_DATE = new Date(doc.USER_CRASH_DATE);
-	collection.update({_id:doc._id },   {
-		$set: { 'USER_CRASH_DATE': doc.USER_CRASH_DATE },
-	}, function(err) {
-		if (!err) {
-			console.log("Error:"+err);	
-		} else {
-			console.log("Modify date format");	
-		}
-	});
 }
 
 //Logout and delete cookie
