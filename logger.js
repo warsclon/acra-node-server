@@ -99,30 +99,12 @@ l.addLog = function(req, res) {
       	console.log("Add log error:"+err);
         res.send({'error':'An error has occurred'});
       } else {
-				console.log("addLog:OK save");
-				//format date text to date format
-				//to aggregate dates
-				formatDate(result,collection);
-				//After insert send email
-				email.send(appid,log);
+        console.log("addLog:OK save");
+        email.send(appid, log);
         res.send(result[0]);
       }
     });
   });
-}
-
-function formatDate(toSave,collection) {
-	var doc = toSave[0];
-	doc.USER_CRASH_DATE = new Date(doc.USER_CRASH_DATE);
-	collection.update({_id:doc._id },   {
-		$set: { 'USER_CRASH_DATE': doc.USER_CRASH_DATE },
-	}, function(err) {
-		if (!err) {
-			console.log("Error:"+err);	
-		} else {
-			console.log("Modify date format");	
-		}
-	});
 }
 
 //Logout and delete cookie

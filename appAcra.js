@@ -46,6 +46,7 @@ function auth (req, res, next) {
 
 //Mobile  without auth
 app.post('/logs/:appid', acraLogger.addLog);
+app.put('/logs/:appid', acraLogger.addLog);
 
 //Administration with auth
 app.get('/logs/:appid/:id', auth, acraLogger.findByIdDetail);
