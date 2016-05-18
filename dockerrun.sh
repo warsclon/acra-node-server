@@ -1,0 +1,1 @@
+docker run -d --name acra-node-server --link mongo:mongodb elektron/acra-node-server

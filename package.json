@@ -1,18 +1,33 @@
 {
-  "name": "acra_server_log",
+  "name": "acra-node-server",
   "description": "Acra Server with nodejs and mongodb",
   "author": "Diego Martin Moreno<diego.mm@gmail.com>",
-  "version": "0.0.3",
-  "dependencies": {
-    "express": ">= 3.1.0",
-    "mongodb":">= 1.2.14",
-    "log4js": ">= 0.5.7",
-	  "emailjs" : ">= 0.3.4",
-	  "colors" : ">= 0.6.0-1",
-    "ejs" : ">= 0.8.3",
-    "moment" : ">= 2.0.0",
-    "async" : ">= 0.2.8",
-	  "node-properties-parser" : ">= 0.0.2"
+  "version": "0.0.4",
+  "main": "appAcra.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobHumphris/acra-node-server.git"
   },
-  "engine": "node >= 0.8.0"
+  "dependencies": {
+    "async": ">= 1.5.2",
+    "basic-auth": ">= 1.0.3",
+    "body-parser": ">= 1.15.0",
+    "colors": ">= 0.6.0-1",
+    "cookie-parser": ">= 1.4.1",
+    "ejs": ">= 2.4.1",
+    "emailjs": ">= 1.0.4",
+    "express": ">= 4.13.4",
+    "express-session": ">= 1.13.0",
+    "log4js": ">= 0.5.7",
+    "moment": ">= 2.0.0",
+    "mongodb": ">= 1.2.14",
+    "morgan": ">= 1.7.0",
+    "properties-parser": ">= 0.3.1",
+    "serve-favicon": ">= 2.3.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "supertest": "^1.0.1",
+    "chai": "^2.3.0"
+  }
 }

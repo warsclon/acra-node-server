@@ -1,4 +1,4 @@
-var proper = require("node-properties-parser");
+var proper = require("properties-parser");
 var colors = require('colors');
 
 var PORT_WEB = "port_web";
@@ -19,66 +19,52 @@ var FROM = "from";
 var TO = "to";
 var DATE_FORMAT = "date_format";
 
-console.log("------------------------".red);
-console.log("ACRA SERVER LOG 0.0.3".bold.red);
-console.log("------------------------".red);
-console.log("Loading properties sync before start server...".red);
-var par = proper.readSync("./acra_server.properties");
+var p = {};
 
-console.log("------------------------".red);
+p.loadProperties = function(next) {
+  proper.read('./acra_server.properties', function(err, data) {
+    console.log("------------------------".red);
+    console.log("ACRA SERVER LOG 0.0.4".bold.red);
+    console.log("------------------------".red);
+    console.log("Loading properties sync before start server...".red);
+    console.log("------------------------".red);
+    p.portWeb = portWeb = data[PORT_WEB];
+    console.log("port_web:"+p.portWeb.red);
+    p.mongodbPort = mongodbPort = process.env.ACRA_MONGODB_PORT || data[MONGODB_PORT];
+    console.log("mongodbPort:"+p.mongodbPort.red);
+    p.mongodbIp = mongodbIp = process.env.ACRA_MONGODB_IP || data[MONGODB_IP];
+    console.log("mongodbIp:"+p.mongodbIp.red);
+    p.username = username = process.env.ACRA_USERNAME || data[USERNAME];
+    console.log("username:"+p.username.red);
+    p.password = password = process.env.ACRA_PASSWORD || data[PASSWORD];
+    console.log("password:"+p.password.red);
+    p.name_database = name_database = process.env.ACRA_DB || data[NAME_DATABASE];
+    console.log("name_database:"+p.name_database.red);
+    p.secret = secret = process.env.ACRA_SECRET ||data[SECRET];
+    console.log("secret:"+p.secret.red);
+    p.key = key = process.env.ACRA_KEY || data[KEY];
+    console.log("key:"+p.key.red);
+    p.send_mail = send_mail = process.env.ACRA_SEND_MAIL || data[SEND_MAIL];
+    console.log("send_mail:"+p.send_mail.red);
+    p.user_mail = user_mail = process.env.ACRA_USER_MAIL || data[USER_MAIL];
+    console.log("user_mail:"+p.user_mail.red);
+    p.password_mail = password_mail = process.env.ACRA_PASSWORD_MAIL ||data[PASSWORD_MAIL];
+    console.log("password_mail:"+p.password_mail.red);
+    p.host = host = process.env.ACRA_HOST || data[HOST];
+    console.log("host:"+p.host.red);
+    p.ssl = ssl = data[SSL];
+    console.log("ssl:"+p.ssl.red);
+    p.subject = subject = data[SUBJECT];
+    console.log("subject:"+p.subject.red);
+    p.from = from = data[FROM];
+    console.log("from:"+from.red);
+    p.to = to = data[TO];
+    console.log("to:"+p.to.red);
+    p.date_format = date_format = data[DATE_FORMAT];
+    console.log("date_format:"+p.date_format.red);
+    console.log("------------------------".red);
+    next();
+  });
+};
 
-exports.portWeb = portWeb = par[PORT_WEB];
-console.log("port_web:"+portWeb.red);
-
-exports.mongodbPort = mongodbPort = par[MONGODB_PORT];
-console.log("mongodbPort:"+mongodbPort.red);
-
-exports.mongodbIp = mongodbIp = par[MONGODB_IP];
-console.log("mongodbIp:"+mongodbIp.red);
-
-exports.username = username = par[USERNAME];
-console.log("username:"+username.red);
-
-exports.password = password = par[PASSWORD];
-console.log("password:"+password.red);
-
-exports.name_database = name_database = par[NAME_DATABASE];
-console.log("name_database:"+name_database.red);
-
-exports.secret = secret = par[SECRET];
-console.log("secret:"+secret.red);
-
-exports.key = key = par[KEY];
-console.log("key:"+key.red);
-
-exports.send_mail = send_mail = par[SEND_MAIL];
-console.log("send_mail:"+send_mail.red);
-
-exports.user_mail = user_mail = par[USER_MAIL];
-console.log("user_mail:"+user_mail.red);
-
-exports.password_mail = password_mail = par[PASSWORD_MAIL];
-console.log("password_mail:"+password_mail.red);
-
-exports.host = host = par[HOST];
-console.log("host:"+host.red);
-
-exports.ssl = ssl = par[SSL];
-console.log("ssl:"+ssl.red);
-
-exports.subject = subject = par[SUBJECT];
-console.log("subject:"+subject.red);
-
-exports.from = from = par[FROM];
-console.log("from:"+from.red);
-
-exports.to = to = par[TO];
-console.log("to:"+to.red);
-
-exports.date_format = date_format = par[DATE_FORMAT];
-console.log("date_format:"+date_format.red);
-
-console.log("------------------------".red);
-
-
-
+module.exports = p;
